@@ -26,7 +26,7 @@ data class ConteudoEducacional(val nome: String, val duracao: Int = 60, val nive
 
 data class Formacao(val nome: String, val conteudos:Set<ConteudoEducacional>) {
     val inscritos = mutableSetOf<Usuario>()
-    var duracaoTotal: Int = 0
+    var duracaoTotal: Int = conteudos.sumOf {it.duracao}
 
     fun matricular(vararg usuario: Usuario) {
         for (user in usuario){
@@ -42,9 +42,6 @@ data class Formacao(val nome: String, val conteudos:Set<ConteudoEducacional>) {
         }
     }
 
-    private fun calcularDuracaoTotal(){
-        duracaoTotal = conteudos.sumOf {it.duracao}
-    }
 }
 
 fun main() {
