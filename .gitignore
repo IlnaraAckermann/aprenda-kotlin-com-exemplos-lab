@@ -1,0 +1,10 @@
+# Arquivos temporários
+*.log
+*.tmp
+
+# Diretórios específicos
+/target/
+/node_modules/
+
+# Arquivos específicos
+.idea/

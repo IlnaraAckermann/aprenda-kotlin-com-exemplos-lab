@@ -1,21 +1,56 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
-
 enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+class Usuario (val nome: String, val email: String, val senha: String) {
+    val formacoesInscritas = mutableSetOf<Formacao>();
+    val formacoesConcluidas = mutableSetOf<Formacao>();
+    fun adicionarFormacaoInscrita(vararg formacoes:Formacao) {
+        for (formacao in formacoes){
+            formacoesInscritas.add(formacao)
+        }
+    }
+    fun adicionarFormacaoConcluida(vararg formacoes:Formacao) {
+        for (formacao in formacoes){
+            formacoesInscritas.remove(formacao)
+            formacoesConcluidas.add(formacao)
+        }
+    }
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+    override fun toString(): String {
+        return "----------------\n\nUsuario\n\nnome='$nome', \nemail='$email', \nsenha='$senha', \n" +
+                "formacoesInscritas=$formacoesInscritas, " +
+                "\nformacoesConcluidas=$formacoesConcluidas\n\n----------------"
+    }
+}
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class ConteudoEducacional(var nome: String, val duracao: Int = 60, val nivel: Nivel)
 
-    val inscritos = mutableListOf<Usuario>()
-    
-    fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+data class Formacao(val nome: String, var conteudos: Set<ConteudoEducacional>) {
+
+    val inscritos = mutableSetOf<Usuario>()
+    var duracaoTotal: Int = 0
+
+    fun matricular(vararg usuario: Usuario) {
+        for (user in usuario){
+            user.adicionarFormacaoInscrita(this)
+            inscritos.add(user)
+        }
+    }
+
+    fun concluir (vararg usuario: Usuario) {
+        for (user in usuario){
+            user.adicionarFormacaoConcluida(this)
+            inscritos.remove(user)
+        }
+    }
+
+    private fun calcularDuracaoTotal(){
+        duracaoTotal = conteudos.sumOf {it.duracao}
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    var user1 = Usuario("Ilnara Ackermann", "ilnara.ackermann@hotmail.com", "senhadailnara")
+    var user2 = Usuario("Maria", "maria1987@email.com", "senhadamaria")
+    var user3 = Usuario("Mario", "mario2001@email.com", "senhadomario")
+    println(user1)
 }
