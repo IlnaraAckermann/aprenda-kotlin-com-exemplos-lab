@@ -1,6 +1,6 @@
 enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario (val nome: String, val email: String, val senha: String) {
+class Usuario (var nome: String, var email: String, var senha: String) {
     val formacoesInscritas = mutableSetOf<Formacao>();
     val formacoesConcluidas = mutableSetOf<Formacao>();
     fun adicionarFormacaoInscrita(vararg formacoes:Formacao) {
@@ -53,4 +53,8 @@ fun main() {
     var user2 = Usuario("Maria", "maria1987@email.com", "senhadamaria")
     var user3 = Usuario("Mario", "mario2001@email.com", "senhadomario")
     println(user1)
+    println(user2)
+    println(user3)
+    user3.senha = "novaSenha"
+    println(user3)
 }
