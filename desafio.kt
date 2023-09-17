@@ -24,8 +24,7 @@ class Usuario (var nome: String, var email: String, var senha: String) {
 
 data class ConteudoEducacional(val nome: String, val duracao: Int = 60, val nivel: Nivel)
 
-data class Formacao(val nome: String, var conteudos: Set<ConteudoEducacional>) {
-
+data class Formacao(val nome: String, val conteudos:Set<ConteudoEducacional>) {
     val inscritos = mutableSetOf<Usuario>()
     var duracaoTotal: Int = 0
 
@@ -67,5 +66,38 @@ fun main() {
     val conteudo5 = ConteudoEducacional("conteudo5",  10, Nivel.DIFICIL)
     val conteudo6 = ConteudoEducacional("conteudo6",  10, Nivel.DIFICIL)
     println(conteudo1)
+    println(conteudo4)
+    println(conteudo6)
+
+    //criando formações
+    val formacao1 = Formacao("Formação 1", setOf(conteudo1, conteudo2))
+    val formacao2 = Formacao("Formação 2", setOf(conteudo1,conteudo3,conteudo5))
+    val formacao3 = Formacao("Formação 3", setOf(conteudo1,conteudo2,conteudo3,conteudo4,conteudo5,conteudo6))
+    println(formacao1)
+    println(formacao2)
+    println(formacao3)
+
+
+    //matriculando alunos
+    formacao1.matricular(user1)
+    println(formacao1.inscritos)
+    formacao1.matricular(user2)
+    println(formacao1.inscritos)
+    formacao2.matricular(user1)
+    println(formacao2.inscritos)
+    formacao3.matricular(user3)
+    println(formacao3.inscritos)
+
+
+    //concluindo
+
+    println(user1.formacoesConcluidas)
+    println(user1.formacoesInscritas)
+    println(formacao1.inscritos)
+    formacao1.concluir(user1)
+    println(formacao1.inscritos)
+    println(user1.formacoesConcluidas)
+    println(user1.formacoesInscritas)
+    println(formacao1.duracaoTotal)
 
 }
